@@ -70,7 +70,7 @@ export default function CreateAutoFillRequestForm({
 				? {
 						currencyId: valueWithdrawRequestById[0]?.currencyId || 0,
 						amount: valueWithdrawRequestById[0]?.amount || 0,
-						bankInfo: bankReturnValue || valueWithdrawRequestById[0]?.bankInfo || "",
+						bankInfo: bankReturnValue  || "",
 						description: valueWithdrawRequestById[0]?.description || "",
 				  }
 				: {
@@ -143,6 +143,7 @@ export default function CreateAutoFillRequestForm({
 							register={register}
 							bankInfo={bankInfo}
 							bankReturnValue={bankReturnValue}
+							setBankReturnValue={setBankReturnValue}
 						/>
 					</UserAutoFillFormBankWrap>
 
