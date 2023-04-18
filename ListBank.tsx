@@ -14,22 +14,19 @@ export type PersonalBank = {
 };
 export default function ListBank(props: {
 	register: UseFormRegister<{
+		bankId:number;
 		currencyId: number;
 		amount: number;
 		bankInfo: string;
 		description: string;
 	}>;
-	bankReturnValue: string;
-	setBankReturnValue: (value: string) => void;
 	bankInfo: Bank[];
 }) {
 	const [inputBank, setInputBank] = useState<PersonalBank>({});
-	const [selectedBank, setSelectedBank] = useState<Bank>();
 	const schema = yup.object().shape({
 		id: yup.number().positive("Vui lòng chọn ngân hàng").required("Vui lòng chọn ngân hàng"),
 	  });
 	const {
-		
 		handleSubmit,
 		formState: { errors },
 		control,
@@ -49,7 +46,6 @@ export default function ListBank(props: {
 	});
 	const onConfirm = async (data: ParamsEmptyForm) => {
 		const selectedBank = props.bankInfo.find((bank) => bank.id === data.id);
-		setSelectedBank(selectedBank);
 	  
 		if (selectedBank) {
 		  const bankInfo = {
@@ -60,17 +56,16 @@ export default function ListBank(props: {
 		  };
 		  
 		  setInputBank(bankInfo);
-		
-		  const bankReturn= (`${bankInfo.bankName} - ${bankInfo.bankCardId} - ${bankInfo.bankOwner}`);
-		  props.setBankReturnValue(bankReturn)
+
 		}
 	  };
-//
+// 
 	return (
 		<>
 		<Controller
 			control={control}
 			name="id"
+			
 			render={({ field: { onChange, value } }) => (
 				<>
 					{props.bankInfo.map((bank) => {
@@ -78,6 +73,7 @@ export default function ListBank(props: {
 							<ErrorBoundary key={bank.id}>
 								<ListBankItem
 									selected={value === bank.id}
+									
 									onClick={() => {
 										onChange(bank.id);
 										handleSubmit(onConfirm)();
