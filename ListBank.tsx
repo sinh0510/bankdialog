@@ -20,6 +20,7 @@ export default function ListBank(props: {
 		description: string;
 	}>;
 	bankReturnValue: string;
+	setBankReturnValue: (value: string) => void;
 	bankInfo: Bank[];
 }) {
 	const [inputBank, setInputBank] = useState<PersonalBank>({});
@@ -59,7 +60,9 @@ export default function ListBank(props: {
 		  };
 		  
 		  setInputBank(bankInfo);
-		  props.bankReturnValue= (`${bankInfo.bankName} - ${bankInfo.bankCardId} - ${bankInfo.bankOwner}`);
+		
+		  const bankReturn= (`${bankInfo.bankName} - ${bankInfo.bankCardId} - ${bankInfo.bankOwner}`);
+		  props.setBankReturnValue(bankReturn)
 		}
 	  };
 //
