@@ -55,9 +55,10 @@ export default function CreateAutoFillRequestForm({
 	};
 
 	const schema = yup.object(yupObj).required();
-	const [bankReturnValue, setBankReturnValue] = useState("");
+
 	const valueWithdrawRequestById = withdrawRequest.filter((val) => val.id === withdrawRequestId);
 	const { bankInfo } = useGetBank();
+
 	const {
 		register,
 		handleSubmit,
@@ -65,20 +66,12 @@ export default function CreateAutoFillRequestForm({
 		watch,
 		formState: { errors },
 	} = useForm<ParamsEmptyForm>({
-		defaultValues:
-			nameForm === FormType.AutoFill
-				? {
-						currencyId: valueWithdrawRequestById[0]?.currencyId || 0,
-						amount: valueWithdrawRequestById[0]?.amount || 0,
-						bankInfo: bankReturnValue  || "",
-						description: valueWithdrawRequestById[0]?.description || "",
-				  }
-				: {
-						currencyId: 1,
-				  },
+		defaultValues: {
+			currencyId: 1,
+		},
 		resolver: yupResolver(schema),
 	});
-	 console.log("www",bankReturnValue)
+
 	const { totalBalance, pendingBalance } = useGetBalance();
 
 	const { handleSubmitDate, disabled } = useSubmitForm({ onClose, reload, withdrawRequestId });
@@ -142,8 +135,6 @@ export default function CreateAutoFillRequestForm({
 						<ListBank
 							register={register}
 							bankInfo={bankInfo}
-							bankReturnValue={bankReturnValue}
-							setBankReturnValue={setBankReturnValue}
 						/>
 					</UserAutoFillFormBankWrap>
 
