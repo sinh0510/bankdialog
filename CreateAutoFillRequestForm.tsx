@@ -80,8 +80,14 @@ export default function CreateAutoFillRequestForm({
 		onchangeDisabled(disabled);
 	}, [disabled]);
 
-	const onSubmit = (data: ParamsEmptyForm) => {
-		handleSubmitDate(data);
+	const onSubmit = async (data: ParamsEmptyForm) => {
+		const selectedBank = bankInfo.find((bank) => bank.id === data.bankId);
+		if (selectedBank) {
+			const bankInfo = {
+				id: selectedBank.id || 0,
+			};
+			handleSubmitDate(data);
+		}
 	};
 
 	return (
@@ -135,6 +141,7 @@ export default function CreateAutoFillRequestForm({
 						<ListBank
 							register={register}
 							bankInfo={bankInfo}
+							control={control}
 						/>
 					</UserAutoFillFormBankWrap>
 
